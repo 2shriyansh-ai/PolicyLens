@@ -25,7 +25,8 @@ unanswerable questions:
 These are controlled-corpus results, not claims about all corporate policies.
 They also show why configurations must be measured: semantic retrieval was
 strongest, while hybrid retrieval and the local reranker did not improve this
-dataset. See the complete [benchmark report](docs/BENCHMARK.md).
+dataset. See the complete [benchmark report](docs/BENCHMARK.md) and the
+[resume/interview wording](docs/RESUME.md).
 
 ## What is implemented
 
