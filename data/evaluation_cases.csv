@@ -1,0 +1,15 @@
+id,split,question,expected_answer,relevant_documents,relevant_pages,question_type,answerable
+dev_001,development,How many annual leave days do employees receive?,Twenty days,leave_policy.txt,1,direct,true
+dev_002,development,Can unused holidays be moved to next year?,Up to five days,leave_policy.txt,1,paraphrased,true
+dev_003,development,When does carried leave expire?,Before 31 March,leave_policy.txt,1,direct,true
+dev_004,development,Can a new employee take paid leave immediately?,Only after six months of probation,leave_policy.txt,1,paraphrased,true
+dev_005,development,When is a medical certificate required?,For medical leave over two consecutive working days,leave_policy.txt,1,direct,true
+dev_006,development,What is the hotel reimbursement limit?,INR 5000 per night,travel_policy.txt,1,table,true
+dev_007,development,Does the company provide gym membership?,Not found,,,unanswerable,false
+test_001,test,How much vacation is provided each calendar year?,Twenty paid annual leave days,leave_policy.txt,1,paraphrased,true
+test_002,test,What happens to carried leave after March?,It expires after 31 March,leave_policy.txt,1,paraphrased,true
+test_003,test,How much can I claim for meals each day?,INR 1000,travel_policy.txt,1,table,true
+test_004,test,How soon must travel expenses be submitted?,Within thirty days after returning,travel_policy.txt,1,direct,true
+test_005,test,Can I book business travel without approval?,No; manager approval is required before booking,travel_policy.txt,1,paraphrased,true
+test_006,test,Does the company pay for home internet?,Not found,,,unanswerable,false
+

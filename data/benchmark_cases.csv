@@ -1,0 +1,101 @@
+id,split,question,expected_answer,relevant_documents,relevant_pages,question_type,answerable
+case_001,development,How many paid annual leave days do employees receive?,20 paid annual leave days,leave_policy.pdf,1,direct,true
+case_002,development,What is the yearly vacation allowance?,20 paid annual leave days,leave_policy.pdf,1,paraphrased,true
+case_003,development,At what monthly rate does annual leave accrue?,1.67 days per completed month,leave_policy.pdf,1,direct,true
+case_004,development,How much vacation is earned after each full month?,1.67 days per completed month,leave_policy.pdf,1,paraphrased,true
+case_005,development,How many unused leave days may be carried forward?,5 days,leave_policy.pdf,2,direct,true
+case_006,development,What is the maximum holiday balance transferable to next year?,5 days,leave_policy.pdf,2,paraphrased,true
+case_007,development,When does carried leave expire?,After 31 March,leave_policy.pdf,2,direct,true
+case_008,test,By what date must last year's transferred vacation be used?,After 31 March,leave_policy.pdf,2,paraphrased,true
+case_009,test,When do new employees become eligible for paid annual leave?,After 6 months of probation,leave_policy.pdf,3,direct,true
+case_010,test,Can a new hire take paid vacation before finishing six months?,After 6 months of probation,leave_policy.pdf,3,paraphrased,true
+case_011,development,When is a medical certificate required?,More than 2 consecutive working days,leave_policy.pdf,3,direct,true
+case_012,development,After how many continuous sick days must proof from a doctor be supplied?,More than 2 consecutive working days,leave_policy.pdf,3,paraphrased,true
+case_013,development,How much paid parental leave does a primary caregiver receive?,26 weeks,leave_policy.pdf,4,direct,true
+case_014,development,What is the parental-leave duration for the main caregiver?,26 weeks,leave_policy.pdf,4,paraphrased,true
+case_015,development,How much paid parental leave does a secondary caregiver receive?,4 weeks,leave_policy.pdf,4,direct,true
+case_016,development,How long can the supporting caregiver take as parental leave?,4 weeks,leave_policy.pdf,4,paraphrased,true
+case_017,development,When may an employee apply for regular remote work?,After 3 completed months,remote_work_policy.pdf,1,direct,true
+case_018,test,How long must a new hire wait before requesting work from home?,After 3 completed months,remote_work_policy.pdf,1,paraphrased,true
+case_019,test,How many days per week may eligible employees work remotely?,Up to 3 days per standard workweek,remote_work_policy.pdf,1,direct,true
+case_020,test,What is the weekly work-from-home limit?,Up to 3 days per standard workweek,remote_work_policy.pdf,1,paraphrased,true
+case_021,development,What are the remote-work core hours?,10:00 to 16:00 local time,remote_work_policy.pdf,2,direct,true
+case_022,development,During which hours must home-based employees be available?,10:00 to 16:00 local time,remote_work_policy.pdf,2,paraphrased,true
+case_023,development,How quickly must remote employees acknowledge messages?,Within 2 working hours,remote_work_policy.pdf,2,direct,true
+case_024,development,What is the response-time expectation during core hours?,Within 2 working hours,remote_work_policy.pdf,2,paraphrased,true
+case_025,development,What is the maximum home-office equipment allowance?,"INR 60,000",remote_work_policy.pdf,3,table,true
+case_026,development,How much equipment will the company provide for a home workspace?,"INR 60,000",remote_work_policy.pdf,3,table,true
+case_027,development,What is the monthly home-internet reimbursement limit?,"INR 1,500 per month",remote_work_policy.pdf,3,table,true
+case_028,test,How much can an employee claim each month for broadband?,"INR 1,500 per month",remote_work_policy.pdf,3,table,true
+case_029,test,How long may an employee work remotely outside India?,20 calendar days per year,remote_work_policy.pdf,4,direct,true
+case_030,test,What is the annual overseas work-from-anywhere limit?,20 calendar days per year,remote_work_policy.pdf,4,paraphrased,true
+case_031,development,Which approvals are required for international remote work?,"Manager, HR, and information-security approval",remote_work_policy.pdf,4,direct,true
+case_032,development,Who must approve working remotely from another country?,"Manager, HR, and information-security approval",remote_work_policy.pdf,4,paraphrased,true
+case_033,development,What approval is required before business travel is booked?,Manager approval before booking,travel_policy.pdf,1,direct,true
+case_034,development,Can an employee purchase a business trip before asking a manager?,Manager approval before booking,travel_policy.pdf,1,paraphrased,true
+case_035,development,When should domestic flights be booked?,At least 14 days before departure,travel_policy.pdf,1,direct,true
+case_036,development,How early should staff normally reserve an internal flight?,At least 14 days before departure,travel_policy.pdf,1,paraphrased,true
+case_037,development,What is the domestic hotel reimbursement limit?,"INR 5,000 per night",travel_policy.pdf,2,table,true
+case_038,test,How much may an employee claim for one hotel night?,"INR 5,000 per night",travel_policy.pdf,2,table,true
+case_039,test,What is the daily meal reimbursement limit?,"INR 1,000 per day",travel_policy.pdf,2,table,true
+case_040,test,What is the maximum food allowance on a business trip?,"INR 1,000 per day",travel_policy.pdf,2,table,true
+case_041,development,How is local transport reimbursed?,Actual cost with valid receipts,travel_policy.pdf,2,table,true
+case_042,development,Can a traveller recover the full taxi cost and what proof is required?,Actual cost with valid receipts,travel_policy.pdf,2,table,true
+case_043,development,When must a travel expense claim be submitted?,Within 30 days after returning,travel_policy.pdf,3,direct,true
+case_044,development,How long after a trip does an employee have to file expenses?,Within 30 days after returning,travel_policy.pdf,3,paraphrased,true
+case_045,development,When are receipts mandatory for travel expenses?,For individual expenses above INR 500,travel_policy.pdf,3,table,true
+case_046,development,At what amount does an expense need documentary proof?,For individual expenses above INR 500,travel_policy.pdf,3,table,true
+case_047,development,When is business-class travel allowed?,Flights exceeding 8 hours with vice-president approval,travel_policy.pdf,4,direct,true
+case_048,test,What journey length and approval permit a premium cabin?,Flights exceeding 8 hours with vice-president approval,travel_policy.pdf,4,paraphrased,true
+case_049,test,Where is multi-factor authentication mandatory?,"Email, VPN, and production systems",information_security_policy.pdf,1,direct,true
+case_050,test,Which company services require a second login factor?,"Email, VPN, and production systems",information_security_policy.pdf,1,paraphrased,true
+case_051,development,What is the minimum password length?,At least 14 characters,information_security_policy.pdf,1,table,true
+case_052,development,How long must a company password be?,At least 14 characters,information_security_policy.pdf,1,table,true
+case_053,development,How quickly must a suspected security incident be reported?,Within 1 hour of discovery,information_security_policy.pdf,2,direct,true
+case_054,development,What is the reporting deadline after noticing a possible breach?,Within 1 hour of discovery,information_security_policy.pdf,2,paraphrased,true
+case_055,development,Should employees investigate suspected malware themselves?,Do not investigate it independently,information_security_policy.pdf,2,direct,true
+case_056,development,What should a worker avoid doing after finding possible malware?,Do not investigate it independently,information_security_policy.pdf,2,paraphrased,true
+case_057,development,What are the three data-classification levels?,"Public, Internal, or Confidential",information_security_policy.pdf,3,direct,true
+case_058,test,How can company information be categorised?,"Public, Internal, or Confidential",information_security_policy.pdf,3,paraphrased,true
+case_059,test,What is required to share confidential information externally?,Authorization and an approved secure channel,information_security_policy.pdf,3,direct,true
+case_060,test,What controls apply before sensitive company data is sent outside?,Authorization and an approved secure channel,information_security_policy.pdf,3,paraphrased,true
+case_061,development,How long are covered business records retained?,7 years,information_security_policy.pdf,4,table,true
+case_062,development,What is the retention period for scheduled company records?,7 years,information_security_policy.pdf,4,table,true
+case_063,development,May confidential company data be stored on personal removable media?,It is prohibited,information_security_policy.pdf,4,direct,true
+case_064,development,Can sensitive work files be copied to a personal USB drive?,It is prohibited,information_security_policy.pdf,4,paraphrased,true
+case_065,development,What is the annual group medical coverage?,"INR 500,000 per family per year",benefits_policy.pdf,1,table,true
+case_066,development,How much health-insurance protection does each family receive?,"INR 500,000 per family per year",benefits_policy.pdf,1,table,true
+case_067,development,Who is covered by the group medical policy?,"Employee, one spouse or partner, and up to 2 dependent children",benefits_policy.pdf,1,direct,true
+case_068,test,Which family members can be included in company health insurance?,"Employee, one spouse or partner, and up to 2 dependent children",benefits_policy.pdf,1,paraphrased,true
+case_069,test,What is the annual wellness reimbursement limit?,"INR 12,000 per calendar year",benefits_policy.pdf,2,table,true
+case_070,test,How much can an employee claim yearly for wellbeing expenses?,"INR 12,000 per calendar year",benefits_policy.pdf,2,table,true
+case_071,development,Do gym memberships qualify as wellness expenses?,"Yes, with a receipt",benefits_policy.pdf,2,direct,true
+case_072,development,Can the wellness allowance pay for a fitness-centre membership?,"Yes, with a receipt",benefits_policy.pdf,2,paraphrased,true
+case_073,development,What is the professional-learning allowance?,"INR 30,000 per year",benefits_policy.pdf,3,table,true
+case_074,development,How much annual funding is available for employee courses?,"INR 30,000 per year",benefits_policy.pdf,3,table,true
+case_075,development,What approval is needed for course reimbursement?,Manager approval before enrolment,benefits_policy.pdf,3,direct,true
+case_076,development,When must a manager approve training for it to be paid?,Manager approval before enrolment,benefits_policy.pdf,3,paraphrased,true
+case_077,development,How much does the company contribute to retirement?,12 percent of eligible basic salary,benefits_policy.pdf,4,table,true
+case_078,test,What percentage of basic pay goes into the employer retirement contribution?,12 percent of eligible basic salary,benefits_policy.pdf,4,table,true
+case_079,test,How many counselling sessions does the assistance programme provide?,6 confidential sessions per year,benefits_policy.pdf,4,table,true
+case_080,test,What confidential mental-health support is available annually?,6 confidential sessions per year,benefits_policy.pdf,4,table,true
+case_081,development,Summarize the annual leave allowance and carry-forward limit.,"20 days annually, with at most 5 unused days carried forward",leave_policy.pdf,1|2,multi_page,true
+case_082,development,What deadlines affect carried leave and a new hire's first paid leave?,Carried leave expires after 31 March; new hires qualify after 6 months,leave_policy.pdf,2|3,multi_page,true
+case_083,development,Compare the medical-proof rule with primary-caregiver leave.,A certificate is required after 2 sick days; primary parental leave is 26 weeks,leave_policy.pdf,3|4,multi_page,true
+case_084,development,What weekly remote schedule and daily availability rule apply?,"Up to 3 remote days, with availability from 10:00 to 16:00",remote_work_policy.pdf,1|2,multi_page,true
+case_085,development,What support and annual limit apply to an employee working remotely abroad?,"INR 1,500 monthly internet support; overseas remote work is limited to 20 days",remote_work_policy.pdf,3|4,multi_page,true
+case_086,development,State the approval and claim deadlines for business travel.,Manager approval before booking; claims within 30 days after returning,travel_policy.pdf,1|3,multi_page,true
+case_087,development,What meal limit and receipt threshold apply on a trip?,"Meals are capped at INR 1,000 daily; receipts are required above INR 500",travel_policy.pdf,2|3,multi_page,true
+case_088,test,What account control and incident deadline protect company systems?,MFA is mandatory; suspected incidents must be reported within 1 hour,information_security_policy.pdf,1|2,multi_page,true
+case_089,test,How may confidential information be shared and where must it not be stored?,Confidential data needs authorization and secure transfer and cannot be stored on personal removable media,information_security_policy.pdf,3|4,multi_page,true
+case_090,test,Compare the annual medical and wellness benefits.,"INR 500,000 family medical cover and INR 12,000 annual wellness reimbursement",benefits_policy.pdf,1|2,multi_page,true
+case_091,development,Does the company provide a free daily lunch?,Not found in the supplied policies,,,unanswerable,false
+case_092,development,What is the employee stock-option vesting schedule?,Not found in the supplied policies,,,unanswerable,false
+case_093,development,Is there a company car programme?,Not found in the supplied policies,,,unanswerable,false
+case_094,development,How many paid volunteering days are provided?,Not found in the supplied policies,,,unanswerable,false
+case_095,development,Does the company reimburse pet insurance?,Not found in the supplied policies,,,unanswerable,false
+case_096,development,What is the relocation allowance for a new hire?,Not found in the supplied policies,,,unanswerable,false
+case_097,development,Are employees given free mobile phones?,Not found in the supplied policies,,,unanswerable,false
+case_098,test,What is the dress code on Fridays?,Not found in the supplied policies,,,unanswerable,false
+case_099,test,Does the company offer childcare at the office?,Not found in the supplied policies,,,unanswerable,false
+case_100,test,How much is the annual performance bonus?,Not found in the supplied policies,,,unanswerable,false
