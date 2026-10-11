@@ -1,101 +1,104 @@
 # PolicyLens
 
-PolicyLens is an evaluated retrieval-augmented generation (RAG) system for
-company-policy documents. It finds supporting passages, produces one cited
-answer, and refuses when its evidence is too weak. A separate Evaluation Lab
-compares retrieval configurations and records failures; normal employees only
-use the question-answering view.
+PolicyLens is a question-answering app for company policy documents. Give it a
+set of PDFs, ask a question in plain English, and it finds the most relevant
+passages before returning one answer with the document name and page number.
+If the documents do not contain enough evidence, it says so instead of making
+up an answer.
 
-> The search system finds the evidence. The answerer explains the evidence.
-> The evaluation system checks whether both did their jobs.
+I built this project to explore a question that is easy to overlook in RAG
+applications: **how do we know the system actually works?** Alongside the main
+employee-facing app, PolicyLens has an Evaluation Lab that compares retrieval
+methods, measures their results, and records where they fail.
 
-## Current verified status
+## What it looks like in practice
 
-The local semantic pipeline, PDF extraction, employee UI and evaluation lab are
-working. The controlled benchmark contains five original policy PDFs and 100
-labelled questions. The held-out split contains 27 answerable and 3
-unanswerable questions:
+An employee might ask:
 
-| Configuration | Answerable cases | Hit@3 | Correct refusals | False refusals |
-|---|---:|---:|---:|---:|
-| Semantic | 27 | 27/27 | 3/3 | 7/27 |
-| Hybrid | 27 | 21/27 | 3/3 | 10/27 |
-| Hybrid + local reranking | 27 | 22/27 | 2/3 | 8/27 |
+> How many unused leave days can I carry forward?
 
-These are controlled-corpus results, not claims about all corporate policies.
-They also show why configurations must be measured: semantic retrieval was
-strongest, while hybrid retrieval and the local reranker did not improve this
-dataset. See the complete [benchmark report](docs/BENCHMARK.md) and the
-[resume/interview wording](docs/RESUME.md).
+PolicyLens searches the uploaded policies, returns the answer, and shows the
+supporting passage from the correct page. Behind the scenes, the Evaluation Lab
+can run the same set of labelled questions through different configurations so
+their performance can be compared fairly.
 
-## What is implemented
+## Main features
 
-- PDF and text extraction with document/page metadata.
-- Fixed-size and heading/paragraph-aware chunking.
-- BM25 keyword retrieval.
-- An offline hashing retrieval baseline.
-- Optional Sentence Transformer embeddings for real semantic retrieval.
-- Optional local FLAN-T5 answer generation with deterministic citations.
-- Hybrid retrieval using reciprocal-rank fusion.
-- A transparent local reranker.
-- Evidence-threshold refusal and source display.
-- Development and held-out evaluation splits.
-- Hit@1, Hit@3, Hit@5, MRR, correct/false refusal, faithfulness audit,
-  latency, raw counts and bootstrap intervals.
-- Per-query result logging for failure analysis.
-- Streamlit employee view and separate Evaluation Lab.
+- Upload and search PDF policy documents.
+- Keep document names, page numbers, and section information with every passage.
+- Choose between fixed-size and structure-aware text chunking.
+- Compare BM25 keyword search, semantic search, hybrid search, and local reranking.
+- Return cited answers or refuse when the evidence is too weak.
+- Build and validate a labelled evaluation dataset from the app.
+- Measure Hit@1, Hit@3, Hit@5, MRR, faithfulness, refusal behaviour, latency,
+  estimated cost, and bootstrap confidence intervals.
+- Save per-question results for straightforward failure analysis.
+- Run locally without an API key; external model providers are optional.
 
-The repository includes a 100-question controlled benchmark. For stronger
-real-world claims, replace or supplement it with independently sourced policy
-documents and human-reviewed labels.
-
-## Architecture
+## How it works
 
 ```text
-PDF/TXT
-  -> extract text and page metadata
-  -> fixed-size or structure-aware chunks
-  -> embedding index + BM25 index
-
-Question
-  -> semantic/keyword/hybrid retrieval
-  -> optional reranking
-  -> evidence threshold
-  -> answer or abstain
-  -> cited source passages
-
-Labelled questions
-  -> run identical configurations
-  -> retrieval/refusal/latency metrics
-  -> per-query logs and failure analysis
+Policy PDFs
+    ↓
+Extract text while keeping page information
+    ↓
+Split the text into searchable passages
+    ↓
+Convert passages into embeddings and build a search index
+    ↓
+Retrieve the passages most related to the user's question
+    ↓
+Answer with a citation — or refuse if the evidence is weak
 ```
 
-## Run locally
+The user sees one final answer, not a list of competing answers. The retrieved
+passages are shown underneath as sources so the answer can be checked.
 
-From this directory:
+## Benchmark results
+
+The repository includes five original sample policy PDFs and 100 labelled test
+questions. Settings were chosen using a development split, then evaluated once
+on a held-out split containing 27 answerable and 3 unanswerable questions.
+
+| Retrieval method | Hit@3 | Correct refusals | False refusals |
+|---|---:|---:|---:|
+| Semantic | 27/27 | 3/3 | 7/27 |
+| Hybrid | 21/27 | 3/3 | 10/27 |
+| Hybrid + local reranking | 22/27 | 2/3 | 8/27 |
+
+Semantic search performed best on this dataset. It found the correct evidence
+within its first three results for every answerable held-out question. However,
+it also refused 7 answerable questions, which shows that the refusal threshold
+still needs improvement.
+
+These are results from the included controlled benchmark—not a claim that the
+same numbers will hold for every company's documents. The full methodology,
+metrics, and failure breakdown are in [the benchmark report](docs/BENCHMARK.md).
+
+## Run it locally
 
 ```powershell
+git clone https://github.com/2shriyansh-ai/PolicyLens.git
+cd PolicyLens
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-python -m pip install -e .
-python -m streamlit run app.py
-```
-
-The included text policies work immediately. PDF upload requires PyMuPDF,
-which is installed by the standard project dependency command.
-
-For real semantic retrieval:
-
-```powershell
 python -m pip install -e ".[semantic]"
 python -m streamlit run app.py
 ```
 
-The first Sentence Transformer use downloads its model. Select **Sentence
-Transformer** in the sidebar; the UI labels the offline hashing baseline so it
-cannot be mistaken for production semantic search.
+The first use of the Sentence Transformer downloads its model. Once the app
+opens, keep **Use included demo policies** enabled and ask a question such as:
 
-## Run the evaluation harness
+> How many unused leave days may be carried forward?
+
+The basic application can also be installed with `python -m pip install -e .`.
+That version includes the offline hashing baseline but not the Sentence
+Transformer or local FLAN-T5 dependencies.
+
+## Run the evaluation
+
+The Evaluation Lab is available inside the Streamlit app. The command-line
+harness can also be run directly:
 
 ```powershell
 python -m policylens.evaluation `
@@ -107,22 +110,15 @@ python -m policylens.evaluation `
   --output artifacts/evaluation_results.csv
 ```
 
-This creates:
-
-- `evaluation_results.csv`: every question, retrieved chunk, score, decision
-  and latency;
-- `evaluation_summary.csv`: aggregate metrics with counts and a bootstrap
-  confidence interval for Hit@3.
-- `evaluation_report.md`: reproducible results and failure-analysis report.
-- `manual_grading_template.csv`: the explicit 0/1/2 answer-quality review.
-- `failure_summary.csv`: failures grouped by configuration, type and cause.
+It produces detailed query results, a metric summary, a reproducible Markdown
+report, a manual grading sheet, and a grouped failure report. Automatic
+threshold selection uses only the development questions, so the held-out test
+questions remain genuinely unseen during tuning.
 
 ## Optional model providers
 
-The core project works without credentials. To use an OpenAI-compatible
-embedding or chat endpoint, copy `.env.example` into your own environment and
-set the `POLICYLENS_*` variables. The app never asks users to paste secrets into
-the browser and `.env` is ignored by Git.
+No credentials are needed for the default workflow. To use an OpenAI-compatible
+embedding or chat service, set the variables documented in `.env.example`:
 
 ```powershell
 $env:POLICYLENS_LLM_API_KEY="..."
@@ -132,41 +128,19 @@ $env:POLICYLENS_EMBEDDING_MODEL="your-embedding-model"
 python -m streamlit run app.py
 ```
 
-The app also offers a cached local `google/flan-t5-small` generator after the
-semantic dependencies are installed. It is labelled experimental because a
-small local model can be less reliable than the extractive default.
+Secrets are read from the environment and `.env` files are ignored by Git.
+There is also an experimental local `google/flan-t5-small` answer generator,
+although the extractive answerer remains the more predictable default.
 
-## How the experiments remain fair
+## Limitations and next steps
 
-1. Use development questions to select chunking, retrieval and threshold.
-2. Freeze those settings.
-3. Run the held-out test questions without further tuning.
-4. Report counts with percentages and confidence intervals.
-5. Describe small differences as suggestive, not proven.
+- The controlled corpus is intentionally small and should be expanded with
+  independently reviewed, real-world documents.
+- Scanned PDFs need OCR, which is not included yet.
+- Complex PDF tables can lose their structure during extraction.
+- The local reranker is transparent and lightweight, not a neural cross-encoder.
+- Refusal calibration is the clearest area for improvement.
 
-`--threshold auto` calibrates a separate threshold for each retrieval method on
-the development split. This is necessary because semantic, hybrid and reranked
-scores do not share one naturally comparable scale.
-
-## Answer grading
-
-The current offline answerer is extractive: it returns a sentence from the
-retrieved evidence, which makes citation faithfulness directly auditable. When
-an external generative LLM is added, answer correctness must use the documented
-0/1/2 rubric, with an LLM judge only as a first pass and a manual spot-check.
-PolicyLens intentionally does not fabricate an automatic “accuracy” number
-whose grading method is unclear.
-
-## Current boundaries
-
-- The included local reranker is explainable but is not a neural cross-encoder.
-- Scanned PDFs require OCR, which is not yet included.
-- Table extraction depends on the PDF text layer and should be treated as a
-  dedicated failure category.
-- The demo corpus is too small for strong statistical claims.
-- No external LLM is required for the MVP; a production answer-generator
-  adapter can be added after retrieval quality is measured.
-
-See [PHASES.md](PHASES.md) for the build plan and evidence work.
-Use [the dataset guide](docs/DATASET_GUIDE.md) for the final corpus and
-[the interview guide](docs/INTERVIEW_GUIDE.md) to learn the system honestly.
+For more detail, see the [dataset guide](docs/DATASET_GUIDE.md),
+[interview guide](docs/INTERVIEW_GUIDE.md), and
+[resume wording](docs/RESUME.md).
